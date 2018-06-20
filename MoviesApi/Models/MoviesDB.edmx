@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MovieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MOVIES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TITLE" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="YEAR_RELEASE" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PERSON_MOVIE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Person" Type="int" Nullable="false" />
+          <Property Name="Id_Movie" Type="int" Nullable="false" />
+          <Property Name="id_Role" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PERSONS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Last_Name" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="First_Name" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Alias" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="ROLES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ROL" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__PERSON_MO__Id_Mo__15502E78">
+          <End Role="MOVIES" Type="Self.MOVIES" Multiplicity="1" />
+          <End Role="PERSON_MOVIE" Type="Self.PERSON_MOVIE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MOVIES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PERSON_MOVIE">
+              <PropertyRef Name="Id_Movie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PERSON_MO__Id_Pe__145C0A3F">
+          <End Role="PERSONS" Type="Self.PERSONS" Multiplicity="1" />
+          <End Role="PERSON_MOVIE" Type="Self.PERSON_MOVIE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PERSON_MOVIE">
+              <PropertyRef Name="Id_Person" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PERSON_MO__id_Ro__164452B1">
+          <End Role="ROLES" Type="Self.ROLES" Multiplicity="1" />
+          <End Role="PERSON_MOVIE" Type="Self.PERSON_MOVIE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PERSON_MOVIE">
+              <PropertyRef Name="id_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MovieModelStoreContainer">
+          <EntitySet Name="MOVIES" EntityType="Self.MOVIES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PERSON_MOVIE" EntityType="Self.PERSON_MOVIE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PERSONS" EntityType="Self.PERSONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROLES" EntityType="Self.ROLES" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__PERSON_MO__Id_Mo__15502E78" Association="Self.FK__PERSON_MO__Id_Mo__15502E78">
+            <End Role="MOVIES" EntitySet="MOVIES" />
+            <End Role="PERSON_MOVIE" EntitySet="PERSON_MOVIE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PERSON_MO__Id_Pe__145C0A3F" Association="Self.FK__PERSON_MO__Id_Pe__145C0A3F">
+            <End Role="PERSONS" EntitySet="PERSONS" />
+            <End Role="PERSON_MOVIE" EntitySet="PERSON_MOVIE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PERSON_MO__id_Ro__164452B1" Association="Self.FK__PERSON_MO__id_Ro__164452B1">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="PERSON_MOVIE" EntitySet="PERSON_MOVIE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MovieModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MOVy">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TITLE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="YEAR_RELEASE" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PERSON_MOVIE" Relationship="Self.FK__PERSON_MO__Id_Mo__15502E78" FromRole="MOVIES" ToRole="PERSON_MOVIE" />
+        </EntityType>
+        <EntityType Name="PERSON_MOVIE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Person" Type="Int32" Nullable="false" />
+          <Property Name="Id_Movie" Type="Int32" Nullable="false" />
+          <Property Name="id_Role" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MOVy" Relationship="Self.FK__PERSON_MO__Id_Mo__15502E78" FromRole="PERSON_MOVIE" ToRole="MOVIES" />
+          <NavigationProperty Name="PERSON" Relationship="Self.FK__PERSON_MO__Id_Pe__145C0A3F" FromRole="PERSON_MOVIE" ToRole="PERSONS" />
+          <NavigationProperty Name="ROLE" Relationship="Self.FK__PERSON_MO__id_Ro__164452B1" FromRole="PERSON_MOVIE" ToRole="ROLES" />
+        </EntityType>
+        <EntityType Name="PERSON">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Last_Name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="First_Name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Alias" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PERSON_MOVIE" Relationship="Self.FK__PERSON_MO__Id_Pe__145C0A3F" FromRole="PERSONS" ToRole="PERSON_MOVIE" />
+        </EntityType>
+        <EntityType Name="ROLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ROL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PERSON_MOVIE" Relationship="Self.FK__PERSON_MO__id_Ro__164452B1" FromRole="ROLES" ToRole="PERSON_MOVIE" />
+        </EntityType>
+        <Association Name="FK__PERSON_MO__Id_Mo__15502E78">
+          <End Role="MOVIES" Type="Self.MOVy" Multiplicity="1" />
+          <End Role="PERSON_MOVIE" Type="Self.PERSON_MOVIE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MOVIES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PERSON_MOVIE">
+              <PropertyRef Name="Id_Movie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PERSON_MO__Id_Pe__145C0A3F">
+          <End Role="PERSONS" Type="Self.PERSON" Multiplicity="1" />
+          <End Role="PERSON_MOVIE" Type="Self.PERSON_MOVIE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PERSON_MOVIE">
+              <PropertyRef Name="Id_Person" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PERSON_MO__id_Ro__164452B1">
+          <End Role="ROLES" Type="Self.ROLE" Multiplicity="1" />
+          <End Role="PERSON_MOVIE" Type="Self.PERSON_MOVIE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PERSON_MOVIE">
+              <PropertyRef Name="id_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MOVIE_WEBModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MOVIES" EntityType="Self.MOVy" />
+          <EntitySet Name="PERSON_MOVIE" EntityType="Self.PERSON_MOVIE" />
+          <EntitySet Name="PERSONS" EntityType="Self.PERSON" />
+          <EntitySet Name="ROLES" EntityType="Self.ROLE" />
+          <AssociationSet Name="FK__PERSON_MO__Id_Mo__15502E78" Association="Self.FK__PERSON_MO__Id_Mo__15502E78">
+            <End Role="MOVIES" EntitySet="MOVIES" />
+            <End Role="PERSON_MOVIE" EntitySet="PERSON_MOVIE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PERSON_MO__Id_Pe__145C0A3F" Association="Self.FK__PERSON_MO__Id_Pe__145C0A3F">
+            <End Role="PERSONS" EntitySet="PERSONS" />
+            <End Role="PERSON_MOVIE" EntitySet="PERSON_MOVIE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PERSON_MO__id_Ro__164452B1" Association="Self.FK__PERSON_MO__id_Ro__164452B1">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="PERSON_MOVIE" EntitySet="PERSON_MOVIE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MovieModelStoreContainer" CdmEntityContainer="MOVIE_WEBModel">
+          <EntitySetMapping Name="MOVIES">
+            <EntityTypeMapping TypeName="MovieModel.MOVy">
+              <MappingFragment StoreEntitySet="MOVIES">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="YEAR_RELEASE" ColumnName="YEAR_RELEASE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERSON_MOVIE">
+            <EntityTypeMapping TypeName="MovieModel.PERSON_MOVIE">
+              <MappingFragment StoreEntitySet="PERSON_MOVIE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Id_Person" ColumnName="Id_Person" />
+                <ScalarProperty Name="Id_Movie" ColumnName="Id_Movie" />
+                <ScalarProperty Name="id_Role" ColumnName="id_Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERSONS">
+            <EntityTypeMapping TypeName="MovieModel.PERSON">
+              <MappingFragment StoreEntitySet="PERSONS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLES">
+            <EntityTypeMapping TypeName="MovieModel.ROLE">
+              <MappingFragment StoreEntitySet="ROLES">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ROL" ColumnName="ROL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
